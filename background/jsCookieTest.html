@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>js-cookie Példa</title>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+</head>
+<body>
+    <h1>js-cookie Könyvtár Példa</h1>
+    <button onclick="setCookie()">Cookie Beállítása</button>
+    <button onclick="getCookie()">Cookie Lekérése</button>
+    <button onclick="removeCookie()">Cookie Törlése</button>
+
+    <script>
+        function setCookie() {
+            Cookies.set('felhasznalo', 'John Doe', { expires: 7 });
+            alert('Cookie beállítva: felhasznalo = John Doe');
+        }
+
+        function getCookie() {
+            let felhasznalo = Cookies.get('felhasznalo');
+            if (felhasznalo) {
+                alert('Felhasználó: ' + felhasznalo);
+            } else {
+                alert('A felhasznalo cookie nincs beállítva.');
+            }
+        }
+
+        function removeCookie() {
+            Cookies.remove('felhasznalo');
+            alert('Felhasznalo cookie törölve.');
+        }
+    </script>
+</body>
+</html>

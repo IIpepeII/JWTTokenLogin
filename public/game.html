@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game</title>
+</head>
+<body>
+    <h1>Welcome to Backgammon!</h1>
+    <button id="logoutButton">Logout</button>
+    <span id="usernameDisplay"></span>
+
+    <script>
+        async function fetchUserData() {
+            try {
+                const response = await fetch('/api/auth/me', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+
+                if (response.ok) {
+                    const { username } = await response.json();
+                    document.getElementById('usernameDisplay').innerText = `Logged in as: ${username}`;
+                } else {
+                    alert('Failed to fetch user data. Redirecting to login.');
+                    window.location.href = '/';
+                }
+            } catch (err) {
+                alert('An error occurred. Redirecting to login.');
+                window.location.href = '/';
+            }
+        }
+
+        async function logout() {
+            try {
+                await fetch('/api/auth/logout', {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+                window.location.href = '/';
+            } catch (err) {
+                alert('An error occurred during logout.');
+            }
+        }
+
+        document.getElementById('logoutButton').addEventListener('click', logout);
+        fetchUserData();
+    </script>
+</body>
+</html>

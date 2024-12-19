@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Cookie Kezelés JavaScript-ben</title>
+</head>
+<body>
+    <h1>Cookie Kezelés Példa</h1>
+    <button onclick="setCookie('felhasznalo', 'John Doe', 7)">Cookie Beállítása</button>
+    <button onclick="alert('Felhasználó: ' + getCookie('felhasznalo'))">Cookie Lekérése</button>
+    <button onclick="eraseCookie('felhasznalo'); alert('Cookie Törölve')">Cookie Törlése</button>
+
+    <script>
+        // Cookie létrehozása
+        function setCookie(name, value, days) {
+            let expires = "";
+            if (days) {
+                const date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (encodeURIComponent(value) || "") + expires + "; path=/";
+        }
+
+        // Cookie olvasása
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for (let c of ca) {
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) {
+                    return decodeURIComponent(c.substring(nameEQ.length, c.length));
+                }
+            }
+            return null;
+        }
+
+        // Cookie törlése
+        function eraseCookie(name) {   
+            document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        }
+    </script>
+</body>
+</html>
